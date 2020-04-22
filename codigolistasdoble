@@ -1,0 +1,85 @@
+
+#include <stdio.h>
+#include <stdio.h>
+
+typedef struct nodo 
+{
+    int elem;
+    struct nodo *next;
+} nodoi;
+
+
+nodoi * CreateNodo (int item);
+int InsertTail (int item, nodoi* h);
+int DelBack(nodoi** h);
+
+
+int main()
+{
+    int a, b;
+    nodoi* head;
+    head=CreateNodo(2);
+    scanf("%d %d",&a,&b);
+    InsertTail(a, &head);
+    InsertTail(b, &head);
+    DelBack(head);
+    DelBack(head);
+    printf("%d",head);
+    return 0;
+}
+
+
+
+nodoi *CreateNodo (int item)
+{
+    nodoi * new=0;
+    if ((new=malloc(sizeof(nodoi)))==0)
+    {
+        return 0;
+    }
+    new->elem=item;
+    new->next=0;
+    return new;
+}
+
+int InsertTail (int item, nodoi* h)
+{
+    nodoi* apn=h;
+    nodoi* new=0;
+    if ((new=CreateNodo(item))==0)
+    {
+        return 0;
+    }
+    while (apn->next!=0)
+    {
+        apn=apn->next;
+    }
+    apn->next=new;
+    return 1;
+}
+
+int DelBack(nodoi** h)
+{
+    nodoi *apn=*h;
+    nodoi* apnaux=0;
+    if (apn==0)
+    {
+            return 0;
+    }
+    if (apn->next==0)
+    {
+        free(apn);
+        *(h)=0;
+    }
+    else 
+    {
+        while (apn->next->next!=0)//penultimo
+        {
+            apn=apn->next;
+        }
+        apnaux=apn->next;
+        apn->next=0;
+        free(apnaux);
+    }
+    return 1;
+}
